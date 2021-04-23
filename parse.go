@@ -7,7 +7,7 @@ import (
 )
 
 func (t SymbolType) String() string {
-	return [...]string{"(", ")", "!", "&", "|", "IDENT"}[t]
+	return [...]string{"(", ")", "&", "|", "!", "IDENT"}[t]
 }
 
 // Tokenize splits the input string into distinct tokens for further
@@ -39,17 +39,17 @@ func Tokenize(in string) []Symbol {
 	for _, r := range p {
 		switch r {
 		case '(':
-			out = append(out, Symbol{t: symbolLParen})
+			out = append(out, Symbol{t: SymbolLParen})
 		case ')':
-			out = append(out, Symbol{t: symbolRParen})
+			out = append(out, Symbol{t: SymbolRParen})
 		case '&':
-			out = append(out, Symbol{t: symbolBinaryAnd})
+			out = append(out, Symbol{t: SymbolBinaryAnd})
 		case '|':
-			out = append(out, Symbol{t: symbolBinaryOr})
+			out = append(out, Symbol{t: SymbolBinaryOr})
 		case '!':
-			out = append(out, Symbol{t: symbolUnaryNot})
+			out = append(out, Symbol{t: SymbolUnaryNot})
 		case 'I':
-			out = append(out, Symbol{t: symbolIdent, ident: strings.TrimSpace(idents[identCtr])})
+			out = append(out, Symbol{t: SymbolIdent, ident: strings.TrimSpace(idents[identCtr])})
 			identCtr++
 		}
 	}

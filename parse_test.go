@@ -12,18 +12,18 @@ func TestTokenize(t *testing.T) {
 	tkns := Tokenize("foo | bar&!( baz&bar|quux  )")
 
 	expect := []Symbol{
-		{t: symbolIdent, ident: "foo"},
-		{t: symbolBinaryOr},
-		{t: symbolIdent, ident: "bar"},
-		{t: symbolBinaryAnd},
-		{t: symbolUnaryNot},
-		{t: symbolLParen},
-		{t: symbolIdent, ident: "baz"},
-		{t: symbolBinaryAnd},
-		{t: symbolIdent, ident: "bar"},
-		{t: symbolBinaryOr},
-		{t: symbolIdent, ident: "quux"},
-		{t: symbolRParen},
+		{t: SymbolIdent, ident: "foo"},
+		{t: SymbolBinaryOr},
+		{t: SymbolIdent, ident: "bar"},
+		{t: SymbolBinaryAnd},
+		{t: SymbolUnaryNot},
+		{t: SymbolLParen},
+		{t: SymbolIdent, ident: "baz"},
+		{t: SymbolBinaryAnd},
+		{t: SymbolIdent, ident: "bar"},
+		{t: SymbolBinaryOr},
+		{t: SymbolIdent, ident: "quux"},
+		{t: SymbolRParen},
 	}
 	assert.Equal(t, expect, tkns)
 }
