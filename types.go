@@ -1,13 +1,15 @@
 package bsfilter
 
+import "log"
+
 // SymbolType is an enumerated value of all parseable symbols.
 type SymbolType int
 
 // A Symbol is a single kind of token.  It may be a named token or an
 // operator.
 type Symbol struct {
-	t SymbolType
-	ident string
+	T     SymbolType
+	Ident string
 }
 
 const (
@@ -30,3 +32,36 @@ const (
 	// arbitrary string of letters and numbers.
 	SymbolIdent
 )
+
+// An Expression is a single boolean expression that is parsed and has
+// an evaluator attached.
+type Expression struct {
+	l *log.Logger
+
+	root *ASTNode
+}
+
+// A Parser creates a new expression out of a string by first
+// tokenizing it and then recursing through the expression.
+type Parser struct {
+	l *log.Logger
+
+	curSymbol *Symbol
+	curPos    int
+	symbols   []Symbol
+
+	root *ASTNode
+}
+
+// An ASTNode is, unsurprisingly, a node on the abstract syntax tree
+// that is parsed from the expression.
+type ASTNode struct {
+	*Symbol
+
+	Left  *ASTNode
+	Right *ASTNode
+}
+
+// A ValueSet is a set of attributes.  Any attribute that is not
+// present in the set is implicitly false.
+type ValueSet map[string]struct{}
