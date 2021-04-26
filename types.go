@@ -1,6 +1,9 @@
 package bsfilter
 
-import "log"
+import (
+	"log"
+	"sync"
+)
 
 // SymbolType is an enumerated value of all parseable symbols.
 type SymbolType int
@@ -65,3 +68,12 @@ type ASTNode struct {
 // A ValueSet is a set of attributes.  Any attribute that is not
 // present in the set is implicitly false.
 type ValueSet map[string]struct{}
+
+// An ExpressionSet is a collection of expressions that can be
+// evaluated as a whole to run a filter over either the set of
+// expressions or all expressions over a single valueset.
+type ExpressionSet struct {
+	sync.RWMutex
+
+	expressions map[string]*Expression
+}
