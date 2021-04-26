@@ -9,6 +9,19 @@ func (e Expression) String() string {
 	return e.root.String()
 }
 
+// FilterValues takes a map of identifier to ValueSet and applies the
+// expression to it outputing a list of any identifiers that had true
+// evaluations.
+func (e Expression) FilterValues(vset map[string]ValueSet) []string {
+	out := []string{}
+	for n, vs := range vset {
+		if e.Evaluate(vs) {
+			out = append(out, n)
+		}
+	}
+	return out
+}
+
 // Resolve resolves an ASTNode to a boolean value.  By performing this
 // recursion recursively we can resolve an entire AST to a single
 // value.

@@ -125,3 +125,26 @@ func TestExpressionEvaluate(t *testing.T) {
 
 	assert.Equal(t, want, Expression{root: &node}.Evaluate(ValueSet{"testTrue": struct{}{}}))
 }
+
+func TestFilterValues(t *testing.T) {
+	e, err := New("foo&(bar|baz)&!bang")
+	assert.Nil(t, err)
+
+	test := map[string]ValueSet{
+		"t1": ValueSet{
+			"foo": struct{}{},
+			"baz": struct{}{},
+		},
+		"t2": ValueSet{
+			"foo":  struct{}{},
+			"baz":  struct{}{},
+			"bang": struct{}{},
+		},
+		"t3": ValueSet{
+			"foo": struct{}{},
+			"bar": struct{}{},
+		},
+	}
+
+	assert.ElementsMatch(t, e.FilterValues(test), []string{"t1", "t3"})
+}
