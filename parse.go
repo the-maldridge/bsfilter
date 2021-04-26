@@ -61,7 +61,11 @@ func New(in string) (*Expression, error) {
 	if len(tokens) == 0 {
 		return nil, ErrInvalidExpression
 	}
+	return NewFromTokens(tokens), nil
+}
 
+// NewFromTokens provides a way to construct the entire
+func NewFromTokens(tokens []Symbol) *Expression {
 	p := &Parser{
 		symbols: tokens,
 		l:       log.Default(),
@@ -71,7 +75,7 @@ func New(in string) (*Expression, error) {
 
 	e := &Expression{l: log.Default(), root: p.root}
 
-	return e, nil
+	return e
 }
 
 func (p *Parser) expression() {
