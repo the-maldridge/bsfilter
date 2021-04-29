@@ -1,7 +1,6 @@
 package bsfilter
 
 import (
-	"log"
 	"sync"
 )
 
@@ -39,16 +38,12 @@ const (
 // An Expression is a single boolean expression that is parsed and has
 // an evaluator attached.
 type Expression struct {
-	l *log.Logger
-
 	root *ASTNode
 }
 
 // A Parser creates a new expression out of a string by first
 // tokenizing it and then recursing through the expression.
 type Parser struct {
-	l *log.Logger
-
 	curSymbol *Symbol
 	curPos    int
 	symbols   []Symbol

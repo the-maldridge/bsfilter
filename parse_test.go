@@ -1,7 +1,6 @@
 package bsfilter
 
 import (
-	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -40,7 +39,6 @@ func TestNew(t *testing.T) {
 	assert.Nil(t, err)
 
 	expected := &Expression{
-		l: log.Default(),
 		root: &ASTNode{
 			Symbol: &Symbol{T: SymbolBinaryAnd},
 			Left:   &ASTNode{Symbol: &Symbol{T: SymbolIdent, Ident: "foo"}},

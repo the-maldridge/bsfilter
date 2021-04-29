@@ -1,7 +1,6 @@
 package bsfilter
 
 import (
-	"log"
 	"strings"
 	"unicode"
 )
@@ -66,21 +65,17 @@ func New(in string) (*Expression, error) {
 
 // NewFromTokens provides a way to construct the entire
 func NewFromTokens(tokens []Symbol) *Expression {
-	p := &Parser{
-		symbols: tokens,
-		l:       log.Default(),
-	}
+	p := &Parser{symbols: tokens}
 
 	p.expression()
 
-	e := &Expression{l: log.Default(), root: p.root}
+	e := &Expression{root: p.root}
 
 	return e
 }
 
 func (p *Parser) expression() {
 	p.term()
-	p.l.Printf("[EXPRESSION] %+v", p.curSymbol)
 	for p.curSymbol.T == SymbolBinaryOr {
 		or := &ASTNode{Symbol: p.curSymbol}
 		or.Left = p.root
@@ -92,7 +87,6 @@ func (p *Parser) expression() {
 
 func (p *Parser) term() {
 	p.factor()
-	p.l.Printf("[TERM] %+v", p.curSymbol)
 	for p.curSymbol.T == SymbolBinaryAnd {
 		and := &ASTNode{Symbol: p.curSymbol}
 		and.Left = p.root
@@ -104,7 +98,6 @@ func (p *Parser) term() {
 
 func (p *Parser) factor() {
 	p.nextSymbol()
-	p.l.Printf("[FACTOR] %+v", p.curSymbol)
 	switch p.curSymbol.T {
 	case SymbolIdent:
 		p.root = &ASTNode{Symbol: p.curSymbol}
@@ -125,6 +118,5 @@ func (p *Parser) nextSymbol() {
 		return
 	}
 	p.curSymbol = &p.symbols[p.curPos]
-	p.l.Printf("__SYMBOL__: %s", p.curSymbol)
 	p.curPos++
 }
